@@ -1,0 +1,23 @@
+---
+-
+  hosts: all
+  tasks:
+    - name: copying sh file
+      copy:
+        src: ./reados.sh
+        dest: /tmp/reados.sh
+        owner: docker
+        group: docker
+        mode: 01777
+    
+    - name: Running script
+      command: /tmp/reados.sh
+      register: var
+
+    - name: Returning some data
+      debug:
+        msg: 
+          - "Standard input: {{var.stdout}}"
+          - "Standard output: {{var.rc}}"
+          - "Code: {{var.stderr}}"
+...
